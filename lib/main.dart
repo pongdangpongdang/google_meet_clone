@@ -81,17 +81,16 @@ class _MyHomePageState extends State<MyHomePage> {
     if (isPub == false) {
       _client?.ontrack = (track, ion.RemoteStream remoteStream) async {
         if (track.kind == 'video') {
-          print('ontrack: remote stream => ${remoteStream.id}');
+          print('onTrack: remote stream => ${remoteStream.id}'); // log
           setState(() {
-            _remoteRender.srcObject = remoteStream.stream;
+            _remoteRender.srcObject = remoteStream.stream; // remoteStream is come from _client.onTrack
           });
         }
       };
     }
   }
 
-  // pushlish function
-  void publish() async {
+  void publish() async { // when hit the button we can get the camera stream
     log("publish");
     _localStream = await ion.LocalStream.getUserMedia(
         constraints: ion.Constraints.defaults..simulcast = false);
@@ -135,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 // publish button
   Widget getFab() {
-    if (isPub == false) {
+    if (isPub == false) { // which is subscriber
       return Container();
     } else {
       return FloatingActionButton(
