@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Participant> plist = <Participant>[];
   bool isPub = false;
 
-  RTCVideoRenderer _localRender = RTCVideoRenderer();
+  RTCVideoRenderer _localRender = RTCVideoRenderer(); // this is from ion sdk
   RTCVideoRenderer _remoteRender = RTCVideoRenderer();
 
   @override
@@ -57,14 +57,14 @@ class _MyHomePageState extends State<MyHomePage> {
     await _remoteRender.initialize();
   }
 
-  getUrl() {
-    if (kIsWeb) {
-      return ion.GRPCWebSignal('http://localhost:9090');
+  getUrl() { // check whether it is web or native client
+    if (kIsWeb) { // it is from flutter foundation sdk
+      return ion.GRPCWebSignal('http://localhost:9090'); // web
     } else {
       setState(() {
         isPub = true;
       });
-      return ion.GRPCWebSignal('http://10.157.226.109:9090');
+      return ion.GRPCWebSignal('http://10.157.226.109:9090'); //mobile(native) machine ip address?
     }
   }
 
@@ -73,9 +73,10 @@ class _MyHomePageState extends State<MyHomePage> {
   ion.LocalStream? _localStream;
   final String _uuid = Uuid().v4();
 
-  initSfu() async {
+  initSfu() async { //when using android in a web, local host doesn't work, so we need to check
+    // because android use their own localhost instead of the web(my) local host
     final _signal = await getUrl();
-    _client =
+    _client = // sid = room id, uid = variable that we make up side
         await ion.Client.create(sid: "test room", uid: _uuid, signal: _signal);
     if (isPub == false) {
       _client?.ontrack = (track, ion.RemoteStream remoteStream) async {
