@@ -35,7 +35,7 @@ class Participant {
   Participant(this.title, this.renderer, this.stream);
   MediaStream? stream;
   String title;
-  RTCVideoRenderer renderer;
+  RTCVideoRenderer renderer; // we can use it without package
 }
 
 class _MyHomePageState extends State<MyHomePage> {
