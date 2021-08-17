@@ -60,12 +60,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   getUrl() {
     if (kIsWeb) {
-      return ion.GRPCWebSignal('http://localhost:9090');
-    } else {
       setState(() {
         isPub = true;
       });
-      return ion.GRPCWebSignal('http://10.0.2.16:9090');
+      return ion.GRPCWebSignal('http://localhost:9090');
+    } else {
+      setState(() {
+        isPub = false;
+      });
+      return ion.GRPCWebSignal('http://192.168.0.8:9090');
     }
   }
 
@@ -145,3 +148,4 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 }
+
